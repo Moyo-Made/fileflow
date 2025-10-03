@@ -1,0 +1,16 @@
+[
+  {
+    "id": "rule-1759456483561",
+    "enabled": true,
+    "createdAt": "2025-10-03T01:54:43.561Z",
+    "name": "Move PDFs to Documents",
+    "condition": {
+      "type": "extension",
+      "value": ".pdf"
+    },
+    "action": {
+      "type": "move",
+      "target": "/Users/mac/Documents/"
+    }
+  }
+]
