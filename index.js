@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
+import { join } from 'path';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -11,11 +11,13 @@ function createWindow() {
     }
   });
 
-  win.loadFile('index.html');
-  
-  // Open DevTools in development
+  // In development, load from Vite dev server
   if (process.argv.includes('--dev')) {
+    win.loadURL('http://localhost:5173');
     win.webContents.openDevTools();
+  } else {
+    // In production, load from built files
+    win.loadFile(join(__dirname, 'dist/index.html'));
   }
 }
 
