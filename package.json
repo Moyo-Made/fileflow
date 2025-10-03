@@ -1,0 +1,28 @@
+{
+  "name": "fileflow",
+  "version": "1.0.0",
+  "description": "**Smart file organization for your desktop**",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moyo-Made/fileflow.git"
+  },
+  "keywords": [
+    "electron",
+    "file-organizer",
+    "productivity"
+  ],
+  "author": "Moyomade Adegbite",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Moyo-Made/fileflow/issues"
+  },
+  "homepage": "https://github.com/Moyo-Made/fileflow#readme",
+  "devDependencies": {
+    "electron": "^38.2.0"
+  }
+}
