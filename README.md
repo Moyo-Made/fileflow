@@ -23,8 +23,8 @@ npm install
 npm run dev
 ```
 ## Roadmap
-Week 1: Core file watching + basic rules
-Week 2-3: Advanced rule builder + AI suggestions
-Week 4: Email/cloud integrations
+- Week 1: Core file watching + basic rules
+- Week 2-3: Advanced rule builder + AI suggestions
+- Week 4: Email/cloud integrations
 
 Built with ❤️ by Moyomade!
