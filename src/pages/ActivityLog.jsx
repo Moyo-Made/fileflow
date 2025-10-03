@@ -7,6 +7,7 @@ function ActivityLog() {
 	const [isWatching, setIsWatching] = useState(false);
 	const [watchPath, setWatchPath] = useState("");
 	const [ruleActions, setRuleActions] = useState([]);
+	const [completedActions, setCompletedActions] = useState([]);
 
 	useEffect(() => {
 		// Get default downloads path
@@ -24,12 +25,18 @@ function ActivityLog() {
 			setRuleActions((prev) => [action, ...prev].slice(0, 50));
 		};
 
+		const handleActionCompleted = (event, logEntry) => {
+			setCompletedActions((prev) => [logEntry, ...prev].slice(0, 50));
+		};
+
 		ipcRenderer.on("file-event", handleFileEvent);
 		ipcRenderer.on("rule-action", handleRuleAction);
+		ipcRenderer.on("action-completed", handleActionCompleted);
 
 		return () => {
 			ipcRenderer.removeListener("file-event", handleFileEvent);
 			ipcRenderer.removeListener("rule-action", handleRuleAction);
+			ipcRenderer.removeListener("action-completed", handleActionCompleted);
 		};
 	}, []);
 
@@ -223,6 +230,80 @@ function ActivityLog() {
 									}}
 								>
 									{new Date(action.timestamp).toLocaleString()}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+
+			{/* Completed Actions */}
+			{completedActions.length > 0 && (
+				<div
+					style={{
+						padding: "20px",
+						background: "white",
+						borderRadius: "8px",
+						marginTop: "20px",
+					}}
+				>
+					<h3
+						style={{ marginBottom: "15px", fontSize: "18px", color: "#48bb78" }}
+					>
+						✅ Completed Actions ({completedActions.length})
+					</h3>
+					<div
+						style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+					>
+						{completedActions.map((log) => (
+							<div
+								key={log.id}
+								style={{
+									padding: "12px",
+									background: log.success ? "#f0fff4" : "#fff5f5",
+									borderLeft: `4px solid ${log.success ? "#48bb78" : "#f56565"}`,
+									borderRadius: "4px",
+								}}
+							>
+								<div style={{ marginBottom: "5px" }}>
+									{log.success ? "✅" : "❌"} <strong>{log.fileName}</strong>
+									{log.renamed && (
+										<span style={{ color: "#ed8936", marginLeft: "5px" }}>
+											→ {log.newName}
+										</span>
+									)}
+								</div>
+								<div style={{ fontSize: "12px", color: "#718096" }}>
+									📁 Moved to: {log.targetPath}
+								</div>
+								<div
+									style={{
+										fontSize: "12px",
+										color: "#718096",
+										marginTop: "3px",
+									}}
+								>
+									🎯 Rule: {log.ruleName}
+								</div>
+								{log.error && (
+									<div
+										style={{
+											fontSize: "12px",
+											color: "#f56565",
+											marginTop: "3px",
+										}}
+									>
+										⚠️ Error: {log.error}
+									</div>
+								)}
+								<div
+									style={{
+										fontSize: "11px",
+										color: "#a0aec0",
+										marginTop: "5px",
+									}}
+								>
+									{new Date(log.timestamp).toLocaleString()}
 								</div>
 							</div>
 						))}

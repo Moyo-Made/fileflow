@@ -1,0 +1,86 @@
+[
+  {
+    "id": "log-1759458250568",
+    "timestamp": "2025-10-03T02:24:10.568Z",
+    "type": "file-moved",
+    "fileName": "tropical-leaves-background-zoom_23-2148580778.jpg",
+    "sourcePath": "/Users/mac/Downloads/tropical-leaves-background-zoom_23-2148580778.jpg",
+    "targetPath": "/Users/mac/Documents/Screenshots/tropical-leaves-background-zoom_23-2148580778.jpg",
+    "ruleName": "Move JPEG to Screenshots",
+    "success": true,
+    "renamed": false
+  },
+  {
+    "id": "log-1759457806724",
+    "timestamp": "2025-10-03T02:16:46.724Z",
+    "type": "file-moved",
+    "fileName": "nature-3082832_1280.jpg",
+    "sourcePath": "/Users/mac/Downloads/nature-3082832_1280.jpg",
+    "ruleName": "Move JPEG to Screenshots",
+    "success": false,
+    "error": "ENOENT: no such file or directory, rename '/Users/mac/Downloads/nature-3082832_1280.jpg' -> '/Users/mac/Documents/Screenshots/nature-3082832_1280_1759457806724.jpg'"
+  },
+  {
+    "id": "log-1759457806622",
+    "timestamp": "2025-10-03T02:16:46.622Z",
+    "type": "file-moved",
+    "fileName": "nature-3082832_1280.jpg",
+    "sourcePath": "/Users/mac/Downloads/nature-3082832_1280.jpg",
+    "targetPath": "/Users/mac/Documents/Screenshots/nature-3082832_1280.jpg",
+    "ruleName": "Move JPEG to Screenshots",
+    "success": true,
+    "renamed": false
+  },
+  {
+    "id": "log-1759457748132",
+    "timestamp": "2025-10-03T02:15:48.132Z",
+    "type": "file-moved",
+    "fileName": "ea421322241fcd7ded47009e45f7f0549749be37.jpg",
+    "sourcePath": "/Users/mac/Downloads/ea421322241fcd7ded47009e45f7f0549749be37.jpg",
+    "ruleName": "Move JPEG to Screenshots",
+    "success": false,
+    "error": "ENOENT: no such file or directory, rename '/Users/mac/Downloads/ea421322241fcd7ded47009e45f7f0549749be37.jpg' -> '/Users/mac/Documents/Screenshots/ea421322241fcd7ded47009e45f7f0549749be37.jpg'"
+  },
+  {
+    "id": "log-1759457487917",
+    "timestamp": "2025-10-03T02:11:27.917Z",
+    "type": "file-moved",
+    "fileName": "ADEGBITE-MOYOMADE—CV.pdf",
+    "sourcePath": "/Users/mac/Downloads/ADEGBITE-MOYOMADE—CV.pdf",
+    "ruleName": "Move PDFs to Documents",
+    "success": false,
+    "error": "ENOENT: no such file or directory, rename '/Users/mac/Downloads/ADEGBITE-MOYOMADE—CV.pdf' -> '/Users/mac/Documents/ADEGBITE-MOYOMADE—CV_1759457487897.pdf'"
+  },
+  {
+    "id": "log-1759457487782",
+    "timestamp": "2025-10-03T02:11:27.782Z",
+    "type": "file-moved",
+    "fileName": "ADEGBITE-MOYOMADE—CV.pdf",
+    "sourcePath": "/Users/mac/Downloads/ADEGBITE-MOYOMADE—CV.pdf",
+    "targetPath": "/Users/mac/Documents/ADEGBITE-MOYOMADE—CV.pdf",
+    "ruleName": "Move PDFs to Documents",
+    "success": true,
+    "renamed": false
+  },
+  {
+    "id": "log-1759457364175",
+    "timestamp": "2025-10-03T02:09:24.175Z",
+    "type": "file-moved",
+    "fileName": "Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf",
+    "sourcePath": "/Users/mac/Downloads/Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf",
+    "ruleName": "Move PDFs to Documents",
+    "success": false,
+    "error": "ENOENT: no such file or directory, rename '/Users/mac/Downloads/Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf' -> '/Users/mac/Documents/Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES_1759457364171.pdf'"
+  },
+  {
+    "id": "log-1759457364061",
+    "timestamp": "2025-10-03T02:09:24.061Z",
+    "type": "file-moved",
+    "fileName": "Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf",
+    "sourcePath": "/Users/mac/Downloads/Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf",
+    "targetPath": "/Users/mac/Documents/Receipt for ADEGBITE MOYOMADE 2 _ Payment for UNDERGRADUATE FEES.pdf",
+    "ruleName": "Move PDFs to Documents",
+    "success": true,
+    "renamed": false
+  }
+]

@@ -12,5 +12,19 @@
       "type": "move",
       "target": "/Users/mac/Documents/"
     }
+  },
+  {
+    "id": "rule-1759457714505",
+    "enabled": true,
+    "createdAt": "2025-10-03T02:15:14.505Z",
+    "name": "Move JPEG to Screenshots",
+    "condition": {
+      "type": "extension",
+      "value": ".jpg"
+    },
+    "action": {
+      "type": "move",
+      "target": "/Users/mac/Documents/Screenshots/"
+    }
   }
 ]
