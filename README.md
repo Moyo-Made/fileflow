@@ -21,12 +21,10 @@ FileFlow automatically organizes your Downloads, Documents, and Desktop by watch
 ```bash
 npm install
 npm run dev
-
-Roadmap
-
+```
+## Roadmap
 Week 1: Core file watching + basic rules
 Week 2-3: Advanced rule builder + AI suggestions
 Week 4: Email/cloud integrations
-
 
 Built with ❤️ by Moyomade!
