@@ -1,110 +1,141 @@
-import { watch } from 'chokidar';
-import { basename, extname, join } from 'path';
-import { homedir } from 'os';
+import { watch } from "chokidar";
+import { basename, extname, join } from "path";
+import { homedir } from "os";
 
 class FileWatcher {
-  constructor() {
-    this.watcher = null;
-    this.isWatching = false;
-    this.listeners = [];
-  }
+	constructor() {
+		this.watcher = null;
+		this.isWatching = false;
+		this.listeners = [];
+	}
 
-  // Start watching a folder
-  start(folderPath) {
-    if (this.isWatching) {
-      console.log('Already watching...');
-      return;
-    }
+	// Start watching a folder
+	start(folderPath) {
+		if (this.isWatching) {
+			console.log("Already watching...");
+			return;
+		}
 
-    console.log(`📁 Starting to watch: ${folderPath}`);
+		console.log(`📁 Starting to watch: ${folderPath}`);
 
-    this.watcher = watch(folderPath, {
-      ignored: /(^|[\/\\])\../, // ignore dotfiles
-      persistent: true,
-      ignoreInitial: true, // don't trigger for existing files
-      awaitWriteFinish: {
-        stabilityThreshold: 2000, // wait 2s for file to finish writing
-        pollInterval: 100
-      }
-    });
+		this.watcher = watch(folderPath, {
+			ignored: [
+				/(^|[\/\\])\../, 
+				/node_modules/,
+				/\.git/,
+				/dist/, 
+				/build/,
+				/coverage/, 
+				/\.cache/, 
+				/\.next/, 
+				/\.nuxt/,
+				/\.output/,
+				/\.vercel/,
+				/\.turbo/,
+				/package-lock\.json$/,
+				/yarn\.lock$/,
+				/pnpm-lock\.yaml$/,
+				/\.DS_Store$/,
+			],
+			persistent: true,
+			ignoreInitial: true,
+			awaitWriteFinish: {
+				stabilityThreshold: 2000,
+				pollInterval: 100,
+			},
+			// Key settings to reduce file watchers
+			usePolling: false,
+			ignorePermissionErrors: true, 
+			atomic: true,
+		});
 
-    // File added
-    this.watcher.on('add', (filePath) => {
-      const fileInfo = {
-        type: 'added',
-        path: filePath,
-        name: basename(filePath),
-        extension: extname(filePath),
-        timestamp: new Date().toISOString()
-      };
-      
-      console.log('✅ File added:', fileInfo.name);
-      this.notifyListeners(fileInfo);
-    });
+		// File added
+		this.watcher.on("add", (filePath) => {
+			const fileInfo = {
+				type: "added",
+				path: filePath,
+				name: basename(filePath),
+				extension: extname(filePath),
+				timestamp: new Date().toISOString(),
+			};
 
-    // File changed
-    this.watcher.on('change', (filePath) => {
-      const fileInfo = {
-        type: 'changed',
-        path: filePath,
-        name: basename(filePath),
-        extension: extname(filePath),
-        timestamp: new Date().toISOString()
-      };
-      
-      console.log('📝 File changed:', fileInfo.name);
-      this.notifyListeners(fileInfo);
-    });
+			console.log("✅ File added:", fileInfo.name);
+			this.notifyListeners(fileInfo);
+		});
 
-    // File removed
-    this.watcher.on('unlink', (filePath) => {
-      const fileInfo = {
-        type: 'removed',
-        path: filePath,
-        name: basename(filePath),
-        extension: extname(filePath),
-        timestamp: new Date().toISOString()
-      };
-      
-      console.log('🗑️ File removed:', fileInfo.name);
-      this.notifyListeners(fileInfo);
-    });
+		// File changed
+		this.watcher.on("change", (filePath) => {
+			const fileInfo = {
+				type: "changed",
+				path: filePath,
+				name: basename(filePath),
+				extension: extname(filePath),
+				timestamp: new Date().toISOString(),
+			};
 
-    // Watcher ready
-    this.watcher.on('ready', () => {
-      this.isWatching = true;
-      console.log('👀 File watcher is ready!');
-    });
+			console.log("📝 File changed:", fileInfo.name);
+			this.notifyListeners(fileInfo);
+		});
 
-    // Errors
-    this.watcher.on('error', (error) => {
-      console.error('❌ Watcher error:', error);
-    });
-  }
+		// File removed
+		this.watcher.on("unlink", (filePath) => {
+			const fileInfo = {
+				type: "removed",
+				path: filePath,
+				name: basename(filePath),
+				extension: extname(filePath),
+				timestamp: new Date().toISOString(),
+			};
 
-  // Stop watching
-  stop() {
-    if (this.watcher) {
-      this.watcher.close();
-      this.isWatching = false;
-      console.log('⏹️ File watcher stopped');
-    }
-  }
+			console.log("🗑️ File removed:", fileInfo.name);
+			this.notifyListeners(fileInfo);
+		});
 
-  // Add listener for file events
-  addListener(callback) {
-    this.listeners.push(callback);
-  }
+		// Watcher ready
+		this.watcher.on("ready", () => {
+			this.isWatching = true;
+			console.log("👀 File watcher is ready!");
+		});
 
-  // Notify all listeners
-  notifyListeners(fileInfo) {
-    this.listeners.forEach(listener => listener(fileInfo));
-  }
+		// Errors - with better error handling
+		this.watcher.on("error", (error) => {
+			// Only log EMFILE errors once to avoid spam
+			if (error.code === 'EMFILE') {
+				console.error("❌ Too many files open. Consider:");
+				console.error("   1. Watching a more specific folder");
+				console.error("   2. Increasing system file limits");
+				console.error("   3. Adding more ignore patterns");
+				this.stop(); // Stop watcher to prevent spam
+			} else {
+				console.error("❌ Watcher error:", error);
+			}
+		});
+	}
 
-  // Get default Downloads folder path
-  static getDownloadsPath() {
-    return join(homedir(), 'Downloads');
-  }
+	// Stop watching
+	stop() {
+		if (this.watcher) {
+			this.watcher.close();
+			this.isWatching = false;
+			this.watcher = null;
+			console.log("⏹️ File watcher stopped");
+		}
+	}
+
+	// Add listener for file events
+	addListener(callback) {
+		this.listeners.push(callback);
+	}
+
+	// Notify all listeners
+	notifyListeners(fileInfo) {
+		this.listeners.forEach((listener) => listener(fileInfo));
+	}
+
+	// Get default Downloads folder path
+	static getDownloadsPath() {
+		return join(homedir(), "Downloads");
+	}
 }
 
 export default FileWatcher;

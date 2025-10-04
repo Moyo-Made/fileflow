@@ -1,5 +1,39 @@
 [
   {
+    "id": "log-1759538181556",
+    "timestamp": "2025-10-04T00:36:21.557Z",
+    "type": "file-moved",
+    "fileName": "flower.jpg",
+    "sourcePath": "/Users/mac/Documents/flower.jpg",
+    "targetPath": "/Users/mac/Desktop/flower_1759538181555.jpg",
+    "ruleName": "Move files to Desktop",
+    "success": true,
+    "renamed": true,
+    "newName": "flower_1759538181555.jpg"
+  },
+  {
+    "id": "log-1759536321972",
+    "timestamp": "2025-10-04T00:05:21.972Z",
+    "type": "file-moved",
+    "fileName": "flower.jpg",
+    "sourcePath": "/Users/mac/Downloads/flower.jpg",
+    "targetPath": "/Users/mac/Desktop/flower.jpg",
+    "ruleName": "Move jpgs to Desktop",
+    "success": true,
+    "renamed": false
+  },
+  {
+    "id": "log-1759535961787",
+    "timestamp": "2025-10-03T23:59:21.787Z",
+    "type": "file-moved",
+    "fileName": "panda.jpg",
+    "sourcePath": "/Users/mac/Downloads/panda.jpg",
+    "targetPath": "/Users/mac/Documents/Screenshots/panda.jpg",
+    "ruleName": "Move JPEG to Screenshots",
+    "success": true,
+    "renamed": false
+  },
+  {
     "id": "log-1759458250568",
     "timestamp": "2025-10-03T02:24:10.568Z",
     "type": "file-moved",

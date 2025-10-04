@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import path from "path";
 import { fileURLToPath } from "url";
 import FileWatcher from "./src/services/fileWatcher.js";
@@ -13,6 +13,8 @@ let mainWindow;
 let fileWatcher;
 let ruleEngine;
 let activityLogger;
+let isWatching = false;
+let currentWatchPath = null;
 
 function createWindow() {
 	mainWindow = new BrowserWindow({
@@ -109,6 +111,13 @@ function createWindow() {
 			processingFiles.delete(fileInfo.path);
 		}, 5000);
 	});
+
+	// Auto-start watching Downloads folder
+	const downloadsPath = FileWatcher.getDownloadsPath();
+	fileWatcher.start(downloadsPath);
+	isWatching = true;
+	currentWatchPath = downloadsPath;
+	console.log(`🚀 Auto-started watching: ${downloadsPath}`);
 }
 
 // IPC Handlers for file watching
@@ -116,6 +125,8 @@ ipcMain.handle("start-watching", async (event, folderPath) => {
 	try {
 		const watchPath = folderPath || FileWatcher.getDownloadsPath();
 		fileWatcher.start(watchPath);
+		isWatching = true;
+		currentWatchPath = watchPath;
 		return { success: true, path: watchPath };
 	} catch (error) {
 		return { success: false, error: error.message };
@@ -124,6 +135,7 @@ ipcMain.handle("start-watching", async (event, folderPath) => {
 
 ipcMain.handle("stop-watching", async () => {
 	fileWatcher.stop();
+	isWatching = false;
 	return { success: true };
 });
 
@@ -152,6 +164,55 @@ ipcMain.handle("toggle-rule", async (event, ruleId) => {
 
 ipcMain.handle("get-activity-logs", async () => {
 	return activityLogger.getRecentLogs();
+});
+
+// IPC Handler for folder selection
+ipcMain.handle("select-folder", async () => {
+	const result = await dialog.showOpenDialog(mainWindow, {
+		properties: ["openDirectory", "createDirectory"],
+		title: "Select Target Folder",
+	});
+
+	if (result.canceled) {
+		return null;
+	}
+
+	return result.filePaths[0];
+});
+
+// IPC Handlers for Settings
+ipcMain.handle("get-watch-status", async () => {
+	return {
+		isWatching: isWatching,
+		watchPath: currentWatchPath || FileWatcher.getDownloadsPath(),
+	};
+});
+
+ipcMain.handle("change-watch-folder", async (event, newPath) => {
+	try {
+		// Stop current watcher
+		if (isWatching) {
+			fileWatcher.stop();
+		}
+
+		// Start watching new path
+		fileWatcher.start(newPath);
+		isWatching = true;
+		currentWatchPath = newPath;
+
+		return { success: true, path: newPath };
+	} catch (error) {
+		return { success: false, error: error.message };
+	}
+});
+
+ipcMain.handle("clear-activity-logs", async () => {
+	await activityLogger.clearLogs();
+	return { success: true };
+});
+
+ipcMain.handle("get-app-version", async () => {
+	return app.getVersion();
 });
 
 app.whenReady().then(() => {

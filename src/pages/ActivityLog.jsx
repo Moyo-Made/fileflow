@@ -10,11 +10,10 @@ function ActivityLog() {
 	const [completedActions, setCompletedActions] = useState([]);
 
 	useEffect(() => {
-		// Get default downloads path
-		ipcRenderer.invoke("get-downloads-path").then((path) => {
-			setWatchPath(path);
+		ipcRenderer.invoke("get-watch-status").then((status) => {
+			setIsWatching(status.isWatching);
+			setWatchPath(status.watchPath);
 		});
-
 		// Listen for file events
 		const handleFileEvent = (event, fileInfo) => {
 			setEvents((prev) => [fileInfo, ...prev].slice(0, 50)); // Keep last 50 events

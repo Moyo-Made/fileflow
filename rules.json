@@ -1,7 +1,7 @@
 [
   {
     "id": "rule-1759456483561",
-    "enabled": true,
+    "enabled": false,
     "createdAt": "2025-10-03T01:54:43.561Z",
     "name": "Move PDFs to Documents",
     "condition": {
@@ -15,7 +15,7 @@
   },
   {
     "id": "rule-1759457714505",
-    "enabled": true,
+    "enabled": false,
     "createdAt": "2025-10-03T02:15:14.505Z",
     "name": "Move JPEG to Screenshots",
     "condition": {
@@ -25,6 +25,34 @@
     "action": {
       "type": "move",
       "target": "/Users/mac/Documents/Screenshots/"
+    }
+  },
+  {
+    "id": "rule-1759535803981",
+    "enabled": false,
+    "createdAt": "2025-10-03T23:56:43.981Z",
+    "name": "Move jpgs to Desktop",
+    "condition": {
+      "type": "extension",
+      "value": ".jpg"
+    },
+    "action": {
+      "type": "move",
+      "target": "/Users/mac/Desktop"
+    }
+  },
+  {
+    "id": "rule-1759538116326",
+    "enabled": true,
+    "createdAt": "2025-10-04T00:35:16.326Z",
+    "name": "Move files to Desktop",
+    "condition": {
+      "type": "extension",
+      "value": ".jpg"
+    },
+    "action": {
+      "type": "move",
+      "target": "/Users/mac/Desktop"
     }
   }
 ]
